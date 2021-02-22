@@ -3,6 +3,17 @@
 
 #define NEW(X) malloc(sizeof(X))
 
+#define THIS(X) this##X
+#define binded_struct(NAME)   \
+    typedef struct NAME NAME; \
+    NAME *THIS(NAME);         \
+    NAME *bind(NAME *a_this)  \
+    {                         \
+        THIS(NAME) = a_this;  \
+        return a_this;        \
+    };                        \
+    struct NAME
+
 typedef enum bool
 {
     FALSE,
