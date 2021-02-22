@@ -9,7 +9,7 @@ void xp_program_free(xp_program **program)
     for (int i = 0; i < cmd_len; ++i)
     {
         cmd = xp_program_get_command(*program, i);
-        xp_command_free(&cmd);
+        bind(cmd)->free();
     }
     xp_array *cmds = (*program)->commands;
     xp_array_free(&cmds);

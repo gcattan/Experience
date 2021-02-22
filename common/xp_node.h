@@ -3,6 +3,7 @@
 #include "xp_array.h"
 #include "../common/xp_array.h"
 #include "../control/xp_command.h"
+#include "../common/xp_utils.h"
 
 typedef struct xp_node xp_node;
 typedef void (*dlgt_execute)(xp_node *);
@@ -16,7 +17,7 @@ struct xp_node
     int index_in_parent;
 };
 
-void xp_node_free(xp_node **, int a_recursively);
+void xp_node_free(xp_node **, bool a_recursively);
 
 xp_node *xp_node_create(xp_node *parent, dlgt_execute execute, xp_command *a_cmd);
 
