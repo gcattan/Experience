@@ -5,11 +5,11 @@
 void xp_program_free(xp_program **program)
 {
     int cmd_len = (*program)->commands->len;
-    xp_command *cmd = NULL;
+    xp_command *command = NULL;
     for (int i = 0; i < cmd_len; ++i)
     {
-        cmd = xp_program_get_command(*program, i);
-        bind(cmd)->free();
+        command = xp_program_get_command(*program, i);
+        bind(command)->free();
     }
     xp_array *cmds = (*program)->commands;
     xp_array_free(&cmds);
@@ -29,6 +29,9 @@ xp_program *xp_program_create(char *a_str)
     xp_program *ret = NEW(xp_program);
     ret->commands = parse_multiple(a_str);
     ret->root = xp_node_create(NULL, xp_node_execute_root, NULL);
+    binding(xp_program, free);
+    binding(xp_program, execute);
+    binding(xp_program, get_command);
     analyze(ret);
     return ret;
 }

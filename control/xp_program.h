@@ -7,16 +7,17 @@
 #include "../analyzer/xp_analyzer.h"
 #include "xp_command.h"
 
-typedef struct xp_program
+binding_struct(xp_program)
 {
     xp_array *commands;
     xp_node *root;
-} xp_program;
+    void (*execute)();
+    xp_command *(*get_command)(int);
+    __free;
+};
 
-void xp_program_execute(xp_program *program);
+binding_declare(xp_program, void, execute);
 
-void xp_program_free(xp_program **);
+binding_declare_1(xp_program, xp_command *, get_command, int, i);
 
 xp_program *xp_program_create(char *a_str);
-
-xp_command *xp_program_get_command(xp_program *, int);

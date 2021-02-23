@@ -12,6 +12,6 @@ xp_command *xp_command_create(char *a_name, char *a_value)
     xp_command *ret = NEW(xp_command);
     ret->name = a_name;
     ret->value = a_value;
-    ret->free = xp_command_free_this;
+    binding(xp_command, free);
     return ret;
 }

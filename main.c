@@ -9,8 +9,8 @@
 int main()
 {
    char cmd[] = "push a;push print;";
-   xp_program *p = xp_program_create(cmd);
-   xp_program_execute(p);
-   xp_program_free(&p);
+   xp_program *program = xp_program_create(cmd);
+   bind(program)->execute();
+   program->free();
    return 0;
 }
