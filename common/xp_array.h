@@ -1,24 +1,31 @@
 ﻿#pragma once
 
-typedef struct xp_array
+#include "xp_utils.h"
+
+binding_struct(xp_array)
 {
     int len;
     int free_space;
     void **data;
-} xp_array;
-
-void xp_array_free(xp_array **);
+    void *(*pop)();
+    void *(*first)();
+    void *(*last)();
+    void (*push)(void *);
+    void *(*get)(int);
+    void *(*set)(int, void *);
+    __free;
+};
 
 xp_array *xp_array_create();
 
-void xp_array_push(xp_array *, void *a_datum);
+binding_declare(xp_array, void *, pop);
 
-void *xp_array_pop(xp_array *);
+binding_declare(xp_array, void *, first);
 
-void *xp_array_first(xp_array *);
+binding_declare(xp_array, void *, last);
 
-void *xp_array_last(xp_array *);
+binding_declare_1(xp_array, void, push, void *, a_datum);
 
-void *xp_array_get(xp_array *, int a_pos);
+binding_declare_1(xp_array, void *, get, int, a_pos);
 
-void *xp_array_set(xp_array *, int a_pos, void *a_datum);
+binding_declare_2(xp_array, void *, set, int, a_pos, void *, a_datum);

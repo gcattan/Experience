@@ -3,7 +3,7 @@
 
 #define NEW(X) malloc(sizeof(X))
 
-#define THIS(X) this##X
+#define THIS(X) X##_this
 
 #define bind(X) xp_##X##_bind(X)
 
@@ -33,6 +33,10 @@
 #define binding_declare_1(OBJ, RET, NAME, TYPE, VALUE) \
     RET OBJ##_##NAME(OBJ *, TYPE);                     \
     RET OBJ##_##NAME##_this(TYPE VALUE) { return OBJ##_##NAME(THIS(OBJ), VALUE); }
+
+#define binding_declare_2(OBJ, RET, NAME, TYPE1, VALUE1, TYPE2, VALUE2) \
+    RET OBJ##_##NAME(OBJ *, TYPE1, TYPE2);                              \
+    RET OBJ##_##NAME##_this(TYPE1 VALUE1, TYPE2 VALUE2) { return OBJ##_##NAME(THIS(OBJ), VALUE1, VALUE2); }
 
 typedef enum bool
 {

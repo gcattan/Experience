@@ -1,10 +1,10 @@
 ﻿#include "xp_command.h"
 #include <stdlib.h>
 
-void xp_command_free(xp_command **instance)
+void xp_command_free(xp_command **command)
 {
-    free(*instance);
-    *instance = NULL;
+    free(*command);
+    *command = NULL;
 }
 
 xp_command *xp_command_create(char *a_name, char *a_value)

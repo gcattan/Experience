@@ -16,8 +16,8 @@ binding_struct(xp_program)
     __free;
 };
 
+xp_program *xp_program_create(char *a_str);
+
 binding_declare(xp_program, void, execute);
 
 binding_declare_1(xp_program, xp_command *, get_command, int, i);
-
-xp_program *xp_program_create(char *a_str);
