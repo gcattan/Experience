@@ -6,8 +6,11 @@
 #include "common/xp_array.c"
 #include "common/xp_node.c"
 
+#include "tests/xp_array_test.c"
+
 int main()
 {
+   test_array();
    char cmd[] = "push a;push print;";
    xp_program *program = xp_program_create(cmd);
    bind(program)->execute();
