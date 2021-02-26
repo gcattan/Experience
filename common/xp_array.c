@@ -5,7 +5,7 @@
 
 #define SIZE 10
 
-void xp_array_free(xp_array **instance)
+void xp_array_free(xp_array **instance, void *args)
 {
     free((*instance)->data);
     (*instance)->len = -1;

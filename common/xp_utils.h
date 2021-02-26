@@ -7,21 +7,21 @@
 
 #define bind(X) xp_##X##_bind(X)
 
-#define __free void (*free)()
+#define __free void (*free)(void *args)
 
-#define binding_struct(NAME)        \
-    typedef struct NAME NAME;       \
-    NAME *THIS(NAME);               \
-    void NAME##_free(NAME **);      \
-    void NAME##_free_this()         \
-    {                               \
-        NAME##_free(&THIS(NAME));   \
-    }                               \
-    NAME *NAME##_bind(NAME *a_this) \
-    {                               \
-        THIS(NAME) = a_this;        \
-        return a_this;              \
-    };                              \
+#define binding_struct(NAME)               \
+    typedef struct NAME NAME;              \
+    NAME *THIS(NAME);                      \
+    void NAME##_free(NAME **, void *args); \
+    void NAME##_free_this(void *args)      \
+    {                                      \
+        NAME##_free(&THIS(NAME), args);    \
+    }                                      \
+    NAME *NAME##_bind(NAME *a_this)        \
+    {                                      \
+        THIS(NAME) = a_this;               \
+        return a_this;                     \
+    };                                     \
     struct NAME
 
 #define binding(NAME, METHOD) ret->METHOD = NAME##_##METHOD##_this;

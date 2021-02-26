@@ -1,7 +1,7 @@
 ﻿#include "xp_node.h"
 #include "stdlib.h"
 
-void xp_node_free(xp_node **a_node, bool a_recursively)
+void xp_node_free(xp_node **a_node, void *a_recursively)
 {
     xp_array *array = (*a_node)->children;
     if (a_recursively && array)
@@ -9,11 +9,11 @@ void xp_node_free(xp_node **a_node, bool a_recursively)
         int len = array->len;
         for (int i = 0; i < len; ++i)
         {
-            xp_node *child = bind(array)->get(i);
-            xp_node_free(&child, a_recursively);
+            xp_node *node = bind(array)->get(i);
+            bind(node)->free(a_recursively);
         }
     }
-    bind(array)->free();
+    bind(array)->free(NULL);
     if ((*a_node)->parent)
     {
         array = (*a_node)->parent->children;
@@ -25,22 +25,26 @@ void xp_node_free(xp_node **a_node, bool a_recursively)
 
 xp_node *xp_node_create(xp_node *a_parent, dlgt_execute execute, xp_command *a_cmd)
 {
-    xp_node *node = NEW(xp_node);
-    node->execute = execute;
-    node->parent = a_parent;
-    node->children = xp_array_create();
-    node->command = a_cmd;
+    xp_node *ret = NEW(xp_node);
+    ret->execute = execute;
+    ret->parent = a_parent;
+    ret->children = xp_array_create();
+    ret->command = a_cmd;
     if (a_parent)
     {
         xp_array *array = a_parent->children;
-        bind(array)->push(node);
-        node->index_in_parent = a_parent->children->len - 1;
+        bind(array)->push(ret);
+        ret->index_in_parent = a_parent->children->len - 1;
     }
     else
     {
-        node->index_in_parent = -1;
+        ret->index_in_parent = -1;
     }
-    return node;
+    binding(xp_node, push);
+    binding(xp_node, get_child_at);
+    binding(xp_node, children_num);
+    binding(xp_node, free);
+    return ret;
 }
 
 void xp_node_push(xp_node *a_parent, xp_node *a_child)

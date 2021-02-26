@@ -8,21 +8,22 @@
 typedef struct xp_node xp_node;
 typedef void (*dlgt_execute)(xp_node *);
 
-struct xp_node
+binding_struct(xp_node)
 {
     dlgt_execute execute;
     xp_array *children;
     xp_node *parent;
     xp_command *command;
     int index_in_parent;
+    void (*push)(xp_node *);
+    xp_node *(*get_child_at)(int);
+    int (*children_num)();
+    __free;
 };
-
-void xp_node_free(xp_node **, bool a_recursively);
 
 xp_node *xp_node_create(xp_node *parent, dlgt_execute execute, xp_command *a_cmd);
 
-void xp_node_push(xp_node *a_parent, xp_node *a_child);
+binding_declare_1(xp_node, void, push, xp_node *, a_child);
+binding_declare_1(xp_node, xp_node *, get_child_at, int, a_pos);
 
-xp_node *xp_node_get_child_at(xp_node *a_parent, int a_pos);
-
-int xp_node_children_num(xp_node *a_parent);
+binding_declare(xp_node, int, children_num);

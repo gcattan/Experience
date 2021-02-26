@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-void xp_program_free(xp_program **ref_program)
+void xp_program_free(xp_program **ref_program, void *args)
 {
     xp_program *program = *ref_program;
     int cmd_len = program->commands->len;
@@ -10,19 +10,20 @@ void xp_program_free(xp_program **ref_program)
     for (int i = 0; i < cmd_len; ++i)
     {
         command = bind(program)->get_command(i);
-        bind(command)->free();
+        bind(command)->free(NULL);
     }
-    xp_array *cmds = program->commands;
-    xp_array_free(&cmds);
+    xp_array *array = program->commands;
+    bind(array)->free(NULL);
     xp_node *root = program->root;
-    xp_node_free(&root, 1);
+    xp_node_free(&root, (void *)1);
     free(program);
     *ref_program = NULL;
 }
 
 xp_command *xp_program_get_command(xp_program *program, int a_pos)
 {
-    return xp_array_get(program->commands, a_pos);
+    xp_array *array = program->commands;
+    return bind(array)->get(a_pos);
 }
 
 xp_program *xp_program_create(char *a_str)

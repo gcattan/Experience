@@ -11,6 +11,6 @@ int main()
    char cmd[] = "push a;push print;";
    xp_program *program = xp_program_create(cmd);
    bind(program)->execute();
-   program->free();
+   program->free(NULL);
    return 0;
 }

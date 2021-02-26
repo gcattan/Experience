@@ -1,7 +1,7 @@
 ﻿#include "xp_command.h"
 #include <stdlib.h>
 
-void xp_command_free(xp_command **command)
+void xp_command_free(xp_command **command, void *args)
 {
     free(*command);
     *command = NULL;
