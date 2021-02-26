@@ -1,7 +1,7 @@
 ﻿#include "xp_node.h"
 #include "stdlib.h"
 
-void xp_node_free(xp_node **a_node, void *a_recursively)
+void xp_node_free(xp_node **a_node, any a_recursively)
 {
     xp_array *array = (*a_node)->children;
     if (a_recursively && array)

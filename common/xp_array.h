@@ -6,26 +6,26 @@ binding_struct(xp_array)
 {
     int len;
     int free_space;
-    void **data;
-    void *(*pop)();
-    void *(*first)();
-    void *(*last)();
-    void (*push)(void *);
-    void *(*get)(int);
-    void *(*set)(int, void *);
+    any *data;
+    any (*pop)();
+    any (*first)();
+    any (*last)();
+    void (*push)(any);
+    any (*get)(int);
+    any (*set)(int, any);
     __free;
 };
 
 xp_array *xp_array_create();
 
-binding_declare(xp_array, void *, pop);
+binding_declare(xp_array, any, pop);
 
-binding_declare(xp_array, void *, first);
+binding_declare(xp_array, any, first);
 
-binding_declare(xp_array, void *, last);
+binding_declare(xp_array, any, last);
 
-binding_declare_1(xp_array, void, push, void *, a_datum);
+binding_declare_1(xp_array, void, push, any, a_datum);
 
-binding_declare_1(xp_array, void *, get, int, a_pos);
+binding_declare_1(xp_array, any, get, int, a_pos);
 
-binding_declare_2(xp_array, void *, set, int, a_pos, void *, a_datum);
+binding_declare_2(xp_array, any, set, int, a_pos, any, a_datum);

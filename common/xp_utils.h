@@ -7,21 +7,21 @@
 
 #define bind(X) xp_##X##_bind(X)
 
-#define __free void (*free)(void *args)
+#define __free void (*free)(any args)
 
-#define binding_struct(NAME)               \
-    typedef struct NAME NAME;              \
-    NAME *THIS(NAME);                      \
-    void NAME##_free(NAME **, void *args); \
-    void NAME##_free_this(void *args)      \
-    {                                      \
-        NAME##_free(&THIS(NAME), args);    \
-    }                                      \
-    NAME *NAME##_bind(NAME *a_this)        \
-    {                                      \
-        THIS(NAME) = a_this;               \
-        return a_this;                     \
-    };                                     \
+#define binding_struct(NAME)             \
+    typedef struct NAME NAME;            \
+    NAME *THIS(NAME);                    \
+    void NAME##_free(NAME **, any args); \
+    void NAME##_free_this(any args)      \
+    {                                    \
+        NAME##_free(&THIS(NAME), args);  \
+    }                                    \
+    NAME *NAME##_bind(NAME *a_this)      \
+    {                                    \
+        THIS(NAME) = a_this;             \
+        return a_this;                   \
+    };                                   \
     struct NAME
 
 #define binding(NAME, METHOD) ret->METHOD = NAME##_##METHOD##_this;
@@ -38,6 +38,7 @@
     RET OBJ##_##NAME(OBJ *, TYPE1, TYPE2);                              \
     RET OBJ##_##NAME##_this(TYPE1 VALUE1, TYPE2 VALUE2) { return OBJ##_##NAME(THIS(OBJ), VALUE1, VALUE2); }
 
+typedef void *any;
 typedef enum bool
 {
     FALSE,

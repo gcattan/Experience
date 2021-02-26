@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-void xp_program_free(xp_program **ref_program, void *args)
+void xp_program_free(xp_program **ref_program, any args)
 {
     xp_program *program = *ref_program;
     int cmd_len = program->commands->len;
@@ -15,7 +15,7 @@ void xp_program_free(xp_program **ref_program, void *args)
     xp_array *array = program->commands;
     bind(array)->free(NULL);
     xp_node *root = program->root;
-    xp_node_free(&root, (void *)1);
+    xp_node_free(&root, (any)TRUE);
     free(program);
     *ref_program = NULL;
 }
