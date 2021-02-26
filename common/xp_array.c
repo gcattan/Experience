@@ -43,22 +43,22 @@ void xp_array_push(xp_array *a_array, any a_datum)
     --a_array->free_space;
 }
 
-any xp_array_pop(xp_array *a_array)
+any xp_array_pop(xp_array *array)
 {
-    any ret = xp_array_get(a_array, a_array->len - 1);
-    a_array->data[a_array->len - 1] = NULL;
-    --a_array->len;
+    any ret = bind(array)->last();
+    array->data[array->len - 1] = NULL;
+    --array->len;
     return ret;
 }
 
-any xp_array_last(xp_array *a_array)
+any xp_array_last(xp_array *array)
 {
-    return xp_array_get(a_array, a_array->len - 1);
+    return bind(array)->get(array->len - 1);
 }
 
-any xp_array_first(xp_array *a_array)
+any xp_array_first(xp_array *array)
 {
-    return xp_array_get(a_array, 0);
+    return bind(array)->get(0);
 }
 
 any xp_array_get(xp_array *a_array, int a_pos)

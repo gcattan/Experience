@@ -14,8 +14,8 @@ void xp_program_free(xp_program **ref_program, any args)
     }
     xp_array *array = program->commands;
     bind(array)->free(NULL);
-    xp_node *root = program->root;
-    xp_node_free(&root, (any)TRUE);
+    xp_node *node = program->root;
+    bind(node)->free((any)TRUE);
     free(program);
     *ref_program = NULL;
 }

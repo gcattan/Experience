@@ -28,7 +28,8 @@ void xp_node_execute_root(xp_node *node)
     int len = node->children->len;
     for (int i = 0; i < len; ++i)
     {
-        xp_node *child = xp_array_get(node->children, i);
+        xp_array *array = node->children;
+        xp_node *child = bind(array)->get(i);
         child->execute(child);
     }
 }
@@ -36,14 +37,14 @@ void xp_node_execute_root(xp_node *node)
 void xp_node_execute_default(xp_node *node)
 {
     xp_command *cmd = node->command;
-    xp_array *context = getContext();
+    xp_array *array = getContext();
     if CASE_N ("push")
     {
         if CASE_V ("print")
         {
-            printf("%s", xp_array_last(context));
+            printf("%s", bind(array)->last());
         }
-        xp_array_push(context, cmd->value);
+        bind(array)->push(cmd->value);
     }
 }
 
@@ -53,7 +54,8 @@ void analyze(xp_program *program)
     int cmd_num = program->commands->len;
     for (int i = 0; i < cmd_num; ++i)
     {
-        xp_command *cmd = xp_array_get(program->commands, i);
+        xp_array *array = program->commands;
+        xp_command *cmd = bind(array)->get(i);
         if CASE_V ("if")
         {
             current = xp_node_create(current, xp_node_execute_if, cmd);

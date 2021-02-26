@@ -10,7 +10,7 @@ void xp_node_free(xp_node **a_node, any a_recursively)
         for (int i = 0; i < len; ++i)
         {
             xp_node *node = bind(array)->get(i);
-            bind(node)->free(a_recursively);
+            xp_node_free(&node, a_recursively);
         }
     }
     bind(array)->free(NULL);
