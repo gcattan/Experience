@@ -15,7 +15,16 @@ xp_array *getContext()
 
 void xp_node_execute_if(xp_node *node)
 {
-    //TODO
+    xp_array *array = getContext();
+    char *condition = bind(array)->last();
+    if (str_eq(condition, "TRUE"))
+    {
+        int len = bind(node)->children_num();
+        for (int i = 0; i < len; ++i)
+        {
+            bind(node)->execute_child(i);
+        }
+    }
 }
 
 void xp_node_execute_for(xp_node *node)
@@ -50,7 +59,7 @@ void xp_node_execute_default(xp_node *node)
 
 void analyze(xp_program *program)
 {
-    xp_node *current = program->root;
+    xp_node *node = program->root;
     int cmd_num = program->commands->len;
     for (int i = 0; i < cmd_num; ++i)
     {
@@ -58,19 +67,19 @@ void analyze(xp_program *program)
         xp_command *cmd = bind(array)->get(i);
         if CASE_V ("if")
         {
-            current = xp_node_create(current, xp_node_execute_if, cmd);
+            node = xp_node_create(node, xp_node_execute_if, cmd);
         }
         else if CASE_V ("end")
         {
-            current = current->parent;
+            node = node->parent;
         }
         else if CASE_V ("for")
         {
-            current = xp_node_create(current, xp_node_execute_for, cmd);
+            node = xp_node_create(node, xp_node_execute_for, cmd);
         }
         else
         {
-            xp_node_create(current, xp_node_execute_default, cmd);
+            xp_node_create(node, xp_node_execute_default, cmd);
         }
     }
 }

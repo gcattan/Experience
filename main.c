@@ -10,8 +10,8 @@
 
 int main()
 {
-   test_array();
-   char cmd[] = "push a;push print;";
+   // test_array();
+   char cmd[] = "push FALSE;push if;push a;push print;push end;push fini;push print;";
    xp_program *program = xp_program_create(cmd);
    bind(program)->execute();
    program->free(NULL);
