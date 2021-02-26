@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "../common/xp_utils.h"
 
 binding_struct(xp_command)

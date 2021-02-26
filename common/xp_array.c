@@ -8,6 +8,8 @@
 void xp_array_free(xp_array **instance)
 {
     free((*instance)->data);
+    (*instance)->len = -1;
+    (*instance)->free_space = -1;
     (*instance)->data = NULL;
     *instance = NULL;
 }
