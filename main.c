@@ -11,7 +11,10 @@
 int main()
 {
    // test_array();
-   char cmd[] = "push FALSE;push if;push a;push print;push end;push fini;push print;";
+   // "if {0} then {...}"
+   // "push {0}; push if; {...}; push end;"
+   // char cmd[] = "push FALSE;push if;push a;push print;push end;push fini;push print;";
+   char cmd[] = "push 2;push 3;push add;push print;";
    xp_program *program = xp_program_create(cmd);
    bind(program)->execute();
    program->free(NULL);

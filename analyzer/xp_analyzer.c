@@ -29,7 +29,17 @@ void xp_node_execute_if(xp_node *node)
 
 void xp_node_execute_for(xp_node *node)
 {
-    //TODO
+    // TODO
+    xp_array *array = getContext();
+    char *condition = bind(array)->last();
+    while (str_eq(condition, "TRUE"))
+    {
+        int len = bind(node)->children_num();
+        for (int i = 0; i < len; ++i)
+        {
+            bind(node)->execute_child(i);
+        }
+    }
 }
 
 void xp_node_execute_root(xp_node *node)
@@ -52,8 +62,27 @@ void xp_node_execute_default(xp_node *node)
         if CASE_V ("print")
         {
             printf("%s", bind(array)->last());
+            bind(array)->push(cmd->value);
         }
-        bind(array)->push(cmd->value);
+        else if CASE_V ("add")
+        {
+            int a = atoi(bind(array)->last());
+            int b = atoi(bind(array)->get(array->len - 2));
+            char str[21];
+            sprintf(str, "%d", (a + b));
+            bind(array)->push(cmd->value);
+            bind(array)->push(str);
+        }
+        else
+        {
+            bind(array)->push(cmd->value);
+        }
+    }
+    else if CASE_N ("get")
+    {
+        int value = atoi(cmd->value);
+        any datum = bind(array)->get(value);
+        bind(array)->push(datum);
     }
 }
 
