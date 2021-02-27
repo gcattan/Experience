@@ -73,6 +73,15 @@ void xp_node_execute_default(xp_node *node)
             bind(array)->push(cmd->value);
             bind(array)->push(str);
         }
+        else if CASE_V ("equals")
+        {
+            int a = atoi(bind(array)->last());
+            int b = atoi(bind(array)->get(array->len - 2));
+            char str[21];
+            sprintf(str, "%s", a == b ? "TRUE" : "FALSE");
+            bind(array)->push(cmd->value);
+            bind(array)->push(str);
+        }
         else
         {
             bind(array)->push(cmd->value);
@@ -83,6 +92,12 @@ void xp_node_execute_default(xp_node *node)
         int value = atoi(cmd->value);
         any datum = bind(array)->get(value);
         bind(array)->push(datum);
+    }
+    else if CASE_N ("set")
+    {
+        int value = atoi(cmd->value);
+        any datum = bind(array)->last();
+        bind(array)->set(value, datum);
     }
 }
 

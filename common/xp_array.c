@@ -3,8 +3,6 @@
 #include "xp_array.h"
 #include "../common/xp_utils.h"
 
-#define SIZE 10
-
 void xp_array_free(xp_array **instance, any args)
 {
     free((*instance)->data);
@@ -34,7 +32,7 @@ void xp_array_push(xp_array *a_array, any a_datum)
     if (a_array->free_space - 1 < 0)
     {
         any *new_data = malloc(sizeof(any) * (a_array->len + SIZE));
-        memcpy(new_data, a_array->data, a_array->len);
+        memcpy(new_data, a_array->data, sizeof(any) * a_array->len);
         free(a_array->data);
         a_array->data = new_data;
         a_array->free_space = SIZE;

@@ -24,6 +24,7 @@ bool test_array_push_shouldNotBeEmpty()
     bind(array)->push(a);
     ASSERT(array->len == 1)
     free(a);
+    bind(array)->free(NULL);
     return TRUE;
 }
 
@@ -36,6 +37,26 @@ bool test_array_get_shouldReturnItem()
     bind(array)->get(0);
     ASSERT(*a == 2);
     free(a);
+    bind(array)->free(NULL);
+    return TRUE;
+}
+
+bool test_array_increase_shouldCopyItems()
+{
+    xp_array *array = xp_array_create();
+    for (int i = 0; i < SIZE + 1; ++i)
+    {
+        int *a = NEW(int);
+        *a = i;
+        bind(array)->push(a);
+    }
+    for (int i = 0; i < SIZE + 1; ++i)
+    {
+        int *ptr = bind(array)->get(i);
+        ASSERT(*ptr == i);
+        free(ptr);
+    }
+    bind(array)->free(NULL);
     return TRUE;
 }
 
@@ -45,4 +66,5 @@ void test_array()
     int nbFailed = 0;
     RUN(test_array_push_shouldNotBeEmpty);
     RUN(test_array_get_shouldReturnItem);
+    RUN(test_array_increase_shouldCopyItems);
 }

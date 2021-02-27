@@ -2,6 +2,8 @@
 
 #include "xp_utils.h"
 
+#define SIZE 10
+
 binding_struct(xp_array)
 {
     int len;
