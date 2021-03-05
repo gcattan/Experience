@@ -42,6 +42,7 @@ xp_node *xp_node_create(xp_node *a_parent, dlgt_execute execute, xp_command *a_c
     }
     binding(xp_node, push);
     binding(xp_node, get_child_at);
+    binding(xp_node, get_brother);
     binding(xp_node, children_num);
     binding(xp_node, free);
     binding(xp_node, execute_child);
@@ -58,6 +59,12 @@ xp_node *xp_node_get_child_at(xp_node *a_parent, int a_pos)
 {
     xp_array *array = a_parent->children;
     return bind(array)->get(a_pos);
+}
+
+xp_node *xp_node_get_brother(xp_node *a_child, int a_pos)
+{
+    xp_node *node = a_child->parent;
+    return bind(node)->get_child_at(a_child->index_in_parent + a_pos);
 }
 
 int xp_node_children_num(xp_node *a_parent)

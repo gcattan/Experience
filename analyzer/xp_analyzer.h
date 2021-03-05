@@ -5,6 +5,8 @@
 #include "../common/xp_utils.h"
 #include "../control/xp_program.h"
 
+void print_context();
+
 void analyze(xp_program *program);
 
 void xp_node_execute_if(xp_node *node);

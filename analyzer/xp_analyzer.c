@@ -31,14 +31,16 @@ void xp_node_execute_for(xp_node *node)
 {
     // TODO
     xp_array *array = getContext();
-    char *condition = bind(array)->last();
-    while (str_eq(condition, "TRUE"))
+    int condition_index = atoi(bind(array)->last());
+    char *condition = bind(array)->get(condition_index);
+    while (str_eq(condition, "FALSE"))
     {
         int len = bind(node)->children_num();
         for (int i = 0; i < len; ++i)
         {
             bind(node)->execute_child(i);
         }
+        condition = bind(array)->get(condition_index);
     }
 }
 
@@ -53,10 +55,22 @@ void xp_node_execute_root(xp_node *node)
     }
 }
 
+void print_context()
+{
+    printf("-------Context-------:");
+    xp_array *array = getContext();
+    for (int i = 0; i < array->len; ++i)
+    {
+        char *datum = bind(array)->get(i);
+        printf("%s\n", datum);
+    }
+}
+
 void xp_node_execute_default(xp_node *node)
 {
     xp_command *cmd = node->command;
     xp_array *array = getContext();
+    // print_context();
     if CASE_N ("push")
     {
         if CASE_V ("print")
@@ -68,7 +82,7 @@ void xp_node_execute_default(xp_node *node)
         {
             int a = atoi(bind(array)->last());
             int b = atoi(bind(array)->get(array->len - 2));
-            char str[21];
+            char *str = malloc(sizeof(char) * 21);
             sprintf(str, "%d", (a + b));
             bind(array)->push(cmd->value);
             bind(array)->push(str);
@@ -77,7 +91,7 @@ void xp_node_execute_default(xp_node *node)
         {
             int a = atoi(bind(array)->last());
             int b = atoi(bind(array)->get(array->len - 2));
-            char str[21];
+            char *str = malloc(sizeof(char) * 21);
             sprintf(str, "%s", a == b ? "TRUE" : "FALSE");
             bind(array)->push(cmd->value);
             bind(array)->push(str);

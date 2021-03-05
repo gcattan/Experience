@@ -18,7 +18,8 @@ int main()
    // char cmd[] = "push 2;push 2;push add;push print;";
    char cmd[] = "push 0;\
 push 10;\
-push TRUE;\
+push FALSE;\
+push 2;\
 push for;\
 get 0;\
 push 1;\
