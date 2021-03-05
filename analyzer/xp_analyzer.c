@@ -29,7 +29,6 @@ void xp_node_execute_if(xp_node *node)
 
 void xp_node_execute_for(xp_node *node)
 {
-    // TODO
     xp_array *array = getContext();
     int condition_index = atoi(bind(array)->last());
     char *condition = bind(array)->get(condition_index);
@@ -71,11 +70,15 @@ void xp_node_execute_default(xp_node *node)
     xp_command *cmd = node->command;
     xp_array *array = getContext();
     // print_context();
+
+    // printf("%s %s;\n", cmd->name, cmd->value);
+    printf("%s", ""); // workaround: print not displayed
     if CASE_N ("push")
     {
         if CASE_V ("print")
         {
-            printf("%s", bind(array)->last());
+            char *str = bind(array)->last();
+            printf("%s", str);
             bind(array)->push(cmd->value);
         }
         else if CASE_V ("add")
@@ -112,6 +115,14 @@ void xp_node_execute_default(xp_node *node)
         int value = atoi(cmd->value);
         any datum = bind(array)->last();
         bind(array)->set(value, datum);
+    }
+    else if CASE_N ("use")
+    {
+        char *buffer = read_file(cmd->value);
+        xp_program *program = xp_program_create(buffer);
+        bind(program)->execute();
+        bind(program)->free(NULL);
+        free(buffer);
     }
 }
 

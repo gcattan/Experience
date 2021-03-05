@@ -1,0 +1,16 @@
+push 0;
+push 10;
+push FALSE;
+push 2;
+push for;
+get 0;
+push 1;
+push add;
+set 0;
+get 0;
+get 1;
+push equals;
+set 2;
+get 0;
+push print;
+push end;

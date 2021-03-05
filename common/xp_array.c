@@ -1,5 +1,4 @@
-﻿#include <stdlib.h>
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "xp_array.h"
 #include "../common/xp_utils.h"
 

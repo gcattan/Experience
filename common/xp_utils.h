@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 #define NEW(X) malloc(sizeof(X))
 
@@ -48,4 +50,82 @@ typedef enum bool
 bool str_eq(char *a_str1, char *a_str2)
 {
     return strcmp(a_str1, a_str2) == 0;
+}
+
+char *read_file(char filename[])
+{
+    char *buffer = 0;
+    long length;
+    FILE *f = fopen(filename, "rb");
+
+    if (f)
+    {
+        fseek(f, 0, SEEK_END);
+        length = ftell(f);
+        fseek(f, 0, SEEK_SET);
+        buffer = malloc(length);
+        if (buffer)
+        {
+            fread(buffer, 1, length, f);
+        }
+
+        fclose(f);
+    }
+
+    return buffer;
+}
+
+//https://stackoverflow.com/questions/122616/how-do-i-trim-leading-trailing-whitespace-in-a-standard-way
+char *trim(char *str)
+{
+    size_t len = 0;
+    char *frontp = str;
+    char *endp = NULL;
+
+    if (str == NULL)
+    {
+        return NULL;
+    }
+    if (str[0] == '\0')
+    {
+        return str;
+    }
+
+    len = strlen(str);
+    endp = str + len;
+
+    /* Move the front and back pointers to address the first non-whitespace
+     * characters from each end.
+     */
+    while (isspace((unsigned char)*frontp))
+    {
+        ++frontp;
+    }
+    if (endp != frontp)
+    {
+        while (isspace((unsigned char)*(--endp)) && endp != frontp)
+        {
+        }
+    }
+
+    if (frontp != str && endp == frontp)
+        *str = '\0';
+    else if (str + len - 1 != endp)
+        *(endp + 1) = '\0';
+
+    /* Shift the string so that it starts at str so that if it's dynamically
+     * allocated, we can still free it on the returned pointer.  Note the reuse
+     * of endp to mean the front of the string buffer now.
+     */
+    endp = str;
+    if (frontp != str)
+    {
+        while (*frontp)
+        {
+            *endp++ = *frontp++;
+        }
+        *endp = '\0';
+    }
+
+    return str;
 }

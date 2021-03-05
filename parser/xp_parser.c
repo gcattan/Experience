@@ -1,7 +1,6 @@
 ﻿#include <string.h>
 #include "xp_parser.h"
 #include "../control/xp_command.h"
-#include <stdlib.h>
 #include "../common/xp_array.h"
 
 xp_array *parse_multiple(char a_commands[])
@@ -18,7 +17,8 @@ xp_array *parse_multiple(char a_commands[])
   for (int i = 0; i < array->len; ++i)
   {
     c = parse(bind(array)->get(i));
-    xp_array_push(ret, c);
+    if (c)
+      xp_array_push(ret, c);
   }
   bind(array)->free(NULL);
   return ret;
@@ -26,7 +26,12 @@ xp_array *parse_multiple(char a_commands[])
 
 xp_command *parse(char a_command[])
 {
-  char *name = strtok(a_command, " ");
-  char *value = strtok(NULL, ";");
-  return xp_command_create(name, value);
+  char *clean = trim(a_command);
+  if (isprint((unsigned char)*clean))
+  {
+    char *name = strtok(clean, " ");
+    char *value = strtok(NULL, ";");
+    return xp_command_create(name, value);
+  }
+  return NULL;
 }

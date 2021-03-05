@@ -1,7 +1,5 @@
 ﻿#include "xp_program.h"
 
-#include <stdlib.h>
-
 void xp_program_free(xp_program **ref_program, any args)
 {
     xp_program *program = *ref_program;

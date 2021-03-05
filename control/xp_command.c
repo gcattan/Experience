@@ -1,5 +1,4 @@
 ﻿#include "xp_command.h"
-#include <stdlib.h>
 
 void xp_command_free(xp_command **command, any args)
 {
