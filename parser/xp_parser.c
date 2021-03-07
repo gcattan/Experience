@@ -35,3 +35,32 @@ xp_command *parse(char a_command[])
   }
   return NULL;
 }
+
+// for {0} to {1}
+xp_array *get_variables(char *string)
+{
+  xp_array *array = xp_array_create();
+  char *ptr = string;
+  int i = -1;
+  int i_start = -1;
+  int i_stop = -1;
+  while (*ptr != '\0')
+  {
+    ++i;
+    char c = (*ptr++);
+    if (c == '{')
+    {
+      i_start = i + 1;
+    }
+    else if (c == '}')
+    {
+      i_stop = i - 1;
+      int len = i_stop - i_start + 2;
+      char *var = malloc(sizeof(char) * (len));
+      strcpy(var, &(string[i_start]));
+      var[len - 1] = '\0';
+      bind(array)->push(var);
+    }
+  }
+  return array;
+}

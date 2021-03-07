@@ -7,11 +7,12 @@
 #include "common/xp_node.c"
 
 #include "tests/xp_array_test.c"
+#include "tests/xp_parser_test.c"
 
 int main()
 {
-   // test_array();
-   // return 0;
+   test_parser();
+   return 0;
    // "if {0} then {...}"
    // "push {0}; push if; {...}; push end;"
    // char cmd[] = "push FALSE;push if;push a;push print;push end;push fini;push print;";

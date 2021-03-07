@@ -1,21 +1,5 @@
 ﻿#include "../common/xp_array.h"
-#include <stdio.h>
-
-#define RUN(X)                      \
-    printf("%s", #X);               \
-    ++nbTest;                       \
-    if (!X())                       \
-    {                               \
-        printf("%s", "\n--failed"); \
-        ++nbFailed;                 \
-    }                               \
-    else                            \
-    {                               \
-        printf("%s", "\n--ok\n");   \
-    }
-#define ASSERT(CONDITION) \
-    if (!CONDITION)       \
-        return FALSE;
+#include "xp_test.h"
 
 bool test_array_push_shouldNotBeEmpty()
 {

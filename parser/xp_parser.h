@@ -5,3 +5,4 @@ typedef struct xp_array xp_array;
 
 xp_command *parse(char[]);
 xp_array *parse_multiple(char[]);
+xp_array *get_variables(char *string);
