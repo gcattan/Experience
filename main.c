@@ -11,8 +11,8 @@
 
 int main()
 {
-   test_parser();
-   return 0;
+   // test_parser();
+   // return 0;
    // "if {0} then {...}"
    // "push {0}; push if; {...}; push end;"
    // char cmd[] = "push FALSE;push if;push a;push print;push end;push fini;push print;";
@@ -34,7 +34,7 @@ int main()
 // push print;\
 // push end;";
 
-   char cmd[] = "use for_loop.txt;";
+   char cmd[] = "use for {2} to {5}.txt;";
    xp_program *program = xp_program_create(cmd);
    bind(program)->execute();
    bind(program)->free(NULL);
