@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define cstring char *
+
+#define Lstring char[];
+
 #define NEW(X) malloc(sizeof(X))
 
 #define THIS(X) X##_this
@@ -40,7 +44,13 @@
     RET OBJ##_##NAME(OBJ *, TYPE1, TYPE2);                              \
     RET OBJ##_##NAME##_this(TYPE1 VALUE1, TYPE2 VALUE2) { return OBJ##_##NAME(THIS(OBJ), VALUE1, VALUE2); }
 
+#define pack(VAR...) \
+    (void *[]) { VAR }
+
 typedef void *any;
+
+typedef any *pack;
+
 typedef enum bool
 {
     FALSE,
@@ -128,4 +138,45 @@ char *trim(char *str)
     }
 
     return str;
+}
+
+cstring create_str(int n)
+{
+    if (n == 0)
+        n = 1;
+    cstring ret = malloc(sizeof(char) * n);
+    ret[0] = '\0';
+    return ret;
+}
+
+cstring cpy_str(cstring s, int start, int stop)
+{
+    int len = stop - start + 2;
+    cstring var = create_str(len);
+    strcpy(var, &(s[start]));
+    var[len - 1] = '\0';
+    return var;
+}
+
+cstring c2str(char c)
+{
+    cstring ret = create_str(2);
+    ret[0] = c;
+    ret[1] = '\0';
+    return ret;
+}
+
+cstring concat_str(cstring a, cstring b, bool free_inputs)
+{
+    int as = strlen(a);
+    int bs = strlen(b);
+    cstring ret = create_str(strlen(a) + strlen(b) + 1);
+    strcat(ret, a);
+    strcat(ret, b);
+    if (free_inputs)
+    {
+        free(a);
+        free(b);
+    }
+    return ret;
 }

@@ -5,7 +5,10 @@
 bool test_get_variables_shouldReturnVariables()
 {
     char test[] = "for {one} in {two}";
-    xp_array *array = get_variables(test);
+    pack p = get_variables(test);
+    xp_array *array = p[0];
+    cstring command_without_var = p[1];
+    ASSERT(str_eq(command_without_var, "for {} in {}"))
     ASSERT(array->len == 2);
     ASSERT(str_eq(bind(array)->get(0), "one"));
     ASSERT(str_eq(bind(array)->get(1), "two"));

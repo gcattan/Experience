@@ -1,8 +1,9 @@
 ﻿#pragma once
+#include "../common/xp_utils.h"
 
 typedef struct xp_command xp_command;
 typedef struct xp_array xp_array;
 
 xp_command *parse(char[]);
 xp_array *parse_multiple(char[]);
-xp_array *get_variables(char *string);
+pack get_variables(char *string);

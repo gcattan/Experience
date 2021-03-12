@@ -37,9 +37,10 @@ xp_command *parse(char a_command[])
 }
 
 // for {0} to {1}
-xp_array *get_variables(char *string)
+pack get_variables(char *string)
 {
   xp_array *array = xp_array_create();
+  cstring string_novar = create_str(0);
   char *ptr = string;
   int i = -1;
   int i_start = -1;
@@ -48,6 +49,10 @@ xp_array *get_variables(char *string)
   {
     ++i;
     char c = (*ptr++);
+    if (i_start == -1)
+    {
+      string_novar = concat_str(string_novar, c2str(c), TRUE);
+    }
     if (c == '{')
     {
       i_start = i + 1;
@@ -55,12 +60,12 @@ xp_array *get_variables(char *string)
     else if (c == '}')
     {
       i_stop = i - 1;
-      int len = i_stop - i_start + 2;
-      char *var = malloc(sizeof(char) * (len));
-      strcpy(var, &(string[i_start]));
-      var[len - 1] = '\0';
+      cstring var = cpy_str(string, i_start, i_stop);
       bind(array)->push(var);
+      i_start = -1;
+      string_novar = concat_str(string_novar, c2str(c), TRUE);
     }
   }
-  return array;
+
+  return pack(array, string_novar);
 }
