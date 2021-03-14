@@ -65,8 +65,6 @@ void print_context()
     }
 }
 
-pack filename_and_variables = NULL;
-
 void xp_node_execute_default(xp_node *node)
 {
     xp_command *cmd = node->command;
@@ -120,28 +118,29 @@ void xp_node_execute_default(xp_node *node)
     }
     else if CASE_N ("use")
     {
-        pack prev_config = filename_and_variables;
-        filename_and_variables = get_variables(cmd->value);
-        xp_array *variables = filename_and_variables[0];
-        cstring v1 = xp_array_get(variables, 0);
-        cstring filename = filename_and_variables[1];
+        cstring prev_filename = g_filename;
+        xp_array *prev_variables = g_variables;
+        pack p = get_variables(cmd->value);
+        g_variables = p[0];
+        g_filename = p[1];
 
-        char *buffer = read_file(filename);
+        char *buffer = read_file(g_filename);
+
         xp_program *program = xp_program_create(buffer);
         bind(program)->execute();
         bind(program)->free(NULL);
         free(buffer);
-        free(filename);
-        xp_array_free(&variables, (any)TRUE);
-        filename_and_variables = prev_config;
+        free(g_filename);
+        xp_array_free(&g_variables, (any)TRUE);
+        g_filename = prev_filename;
+        g_variables = prev_variables;
     }
     else if CASE_N ("geta")
     {
-        if (filename_and_variables)
+        if (g_variables)
         {
             int i = atoi(cmd->value);
-            xp_array *variables = filename_and_variables[0];
-            cstring vari = xp_array_get(variables, i);
+            cstring vari = xp_array_get(g_variables, i);
             bind(array)->push(vari);
         }
     }

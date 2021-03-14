@@ -34,7 +34,7 @@ int main()
 // push print;\
 // push end;";
 
-   char cmd[] = "use for {2} to {5}.txt;";
+   char cmd[] = "use for {0} to {6} do {push print}.txt;";
    xp_program *program = xp_program_create(cmd);
    bind(program)->execute();
    bind(program)->free(NULL);

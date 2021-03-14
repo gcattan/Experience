@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define cstring char *
-
-#define Lstring char[];
-
 #define NEW(X) malloc(sizeof(X))
 
 #define THIS(X) X##_this
@@ -47,6 +43,8 @@
 #define pack(VAR...) \
     (void *[]) { VAR }
 
+typedef char *cstring;
+
 typedef void *any;
 
 typedef any *pack;
@@ -60,29 +58,6 @@ typedef enum bool
 bool str_eq(char *a_str1, char *a_str2)
 {
     return strcmp(a_str1, a_str2) == 0;
-}
-
-char *read_file(char filename[])
-{
-    char *buffer = 0;
-    long length;
-    FILE *f = fopen(filename, "rb");
-
-    if (f)
-    {
-        fseek(f, 0, SEEK_END);
-        length = ftell(f);
-        fseek(f, 0, SEEK_SET);
-        buffer = malloc(length);
-        if (buffer)
-        {
-            fread(buffer, 1, length, f);
-        }
-
-        fclose(f);
-    }
-
-    return buffer;
 }
 
 //https://stackoverflow.com/questions/122616/how-do-i-trim-leading-trailing-whitespace-in-a-standard-way
@@ -151,6 +126,8 @@ cstring create_str(int n)
 
 cstring cpy_str(cstring s, int start, int stop)
 {
+    if (stop == -1)
+        stop = strlen(s);
     int len = stop - start + 2;
     cstring var = create_str(len);
     strcpy(var, &(s[start]));
@@ -179,4 +156,28 @@ cstring concat_str(cstring a, cstring b, bool free_inputs)
         free(b);
     }
     return ret;
+}
+
+char *read_file(char *filename)
+{
+    char *buffer = 0;
+    long length;
+    FILE *f = fopen(filename, "r");
+
+    if (f)
+    {
+        fseek(f, 0, SEEK_END);
+        length = ftell(f);
+        fseek(f, 0, SEEK_SET);
+        buffer = malloc(sizeof(char) * (length + 1));
+        if (buffer)
+        {
+            fread(buffer, 1, length, f);
+        }
+
+        fclose(f);
+        buffer[length] = '\0';
+    }
+
+    return buffer;
 }

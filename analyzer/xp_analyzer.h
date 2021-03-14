@@ -18,5 +18,7 @@ void xp_node_execute_root(xp_node *node);
 void xp_node_execute_default(xp_node *node);
 
 xp_array *g_context = NULL;
+cstring g_filename = NULL;
+xp_array *g_variables = NULL;
 
 xp_array *getContext();
