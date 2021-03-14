@@ -5,6 +5,7 @@ push 2;
 push for;
 get 0;
 geta 2;
+pop interpret;
 get 0;
 push 1;
 push add;

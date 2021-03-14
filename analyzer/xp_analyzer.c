@@ -144,6 +144,21 @@ void xp_node_execute_default(xp_node *node)
             bind(array)->push(vari);
         }
     }
+    else if CASE_N ("pop")
+    {
+        if CASE_V ("interpret")
+        {
+            cstring cmd = bind(array)->last();
+            bind(array)->pop();
+            cstring cpy_cmd = cpy_str(cmd, 0, -1);
+            xp_command *new_cmd = parse(cpy_cmd);
+            xp_node *new_node = xp_node_create(NULL, xp_node_execute_default, new_cmd);
+            new_node->execute(new_node);
+            free(cpy_cmd);
+            xp_command_free(&new_cmd, NULL);
+            xp_node_free(&new_node, FALSE);
+        }
+    }
 }
 
 void analyze(xp_program *program)
