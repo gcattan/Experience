@@ -1,0 +1,27 @@
+.vscode/tasks.json
+  s_a435a18490029e::t_902301403a68d2 7
+  s_a435a18490029e::t_e2773c9ac394a2 25
+  s_a435a18490029e::t_3c41543028da86 10
+  s_a435a18490029e::t_ef17e034d925df 16
+.vscode/c_cpp_properties.json
+  s_a435a18490029e::t_999549da2765c0 13
+  s_a435a18490029e::t_b096a9fff5b523 14
+.vscode/launch.json
+  s_a435a18490029e::t_e57c2f5dce9e52 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "54863357d8b94451cdb6bd5c9c4de1be6991f5d8",
+  "prompts": {},
+  "sessions": {
+    "s_a435a18490029e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "38aab355-de10-4a6d-beeb-9bd0d43ca234",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Gregoire CATTAN <gregoire.cattan@ibm.com>"
+    }
+  }
+}
