@@ -1,0 +1,24 @@
+CLAUDE.md
+  s_a435a18490029e::t_97d85293b6bef4 1-23,40-66,69-76
+  s_a435a18490029e::t_500ce20f3cdccb 26-37
+  s_a435a18490029e::t_21f88363638f9d 67-68
+  s_a435a18490029e::t_a1ff8befd8eab9 24-25,38-39
+COMMANDS.md
+  s_a435a18490029e::t_12c2fb73f6003f 1-119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "5e0c3717b9113555e30104c352176860ca28cde2",
+  "prompts": {},
+  "sessions": {
+    "s_a435a18490029e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "38aab355-de10-4a6d-beeb-9bd0d43ca234",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Gregoire CATTAN <gregoire.cattan@ibm.com>"
+    }
+  }
+}
