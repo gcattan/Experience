@@ -16,6 +16,7 @@ xp_array *xp_array_create()
     xp_array *ret = NEW(xp_array);
     ret->data = NULL;
     ret->len = 0;
+    ret->free_space = 0;
     binding(xp_array, free);
     binding(xp_array, pop);
     binding(xp_array, first);

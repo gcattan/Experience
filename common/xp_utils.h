@@ -57,6 +57,8 @@ typedef enum bool
 
 bool str_eq(char *a_str1, char *a_str2)
 {
+    if (a_str1 == NULL || a_str2 == NULL)
+        return a_str1 == a_str2;
     return strcmp(a_str1, a_str2) == 0;
 }
 
@@ -127,11 +129,13 @@ cstring create_str(int n)
 cstring cpy_str(cstring s, int start, int stop)
 {
     if (stop == -1)
-        stop = strlen(s);
-    int len = stop - start + 2;
-    cstring var = create_str(len);
-    strcpy(var, &(s[start]));
-    var[len - 1] = '\0';
+        stop = strlen(s) - 1;
+    int count = stop - start + 1;
+    if (count < 0)
+        count = 0;
+    cstring var = create_str(count + 1);
+    memcpy(var, &(s[start]), count);
+    var[count] = '\0';
     return var;
 }
 
@@ -162,7 +166,7 @@ char *read_file(char *filename)
 {
     char *buffer = 0;
     long length;
-    FILE *f = fopen(filename, "r");
+    FILE *f = fopen(filename, "rb");
 
     if (f)
     {
@@ -172,11 +176,11 @@ char *read_file(char *filename)
         buffer = malloc(sizeof(char) * (length + 1));
         if (buffer)
         {
-            fread(buffer, 1, length, f);
+            size_t n_read = fread(buffer, 1, length, f);
+            buffer[n_read] = '\0';
         }
 
         fclose(f);
-        buffer[length] = '\0';
     }
 
     return buffer;
