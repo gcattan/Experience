@@ -32,7 +32,7 @@ void xp_node_execute_for(xp_node *node)
     xp_array *array = getContext();
     int condition_index = atoi(bind(array)->last());
     char *condition = bind(array)->get(condition_index);
-    while (str_eq(condition, "FALSE"))
+    while (condition && str_eq(condition, "FALSE"))
     {
         int len = bind(node)->children_num();
         for (int i = 0; i < len; ++i)
@@ -126,10 +126,17 @@ void xp_node_execute_default(xp_node *node)
 
         char *buffer = read_file(g_filename);
 
-        xp_program *program = xp_program_create(buffer);
-        bind(program)->execute();
-        bind(program)->free(NULL);
-        free(buffer);
+        if (buffer)
+        {
+            xp_program *program = xp_program_create(buffer);
+            bind(program)->execute();
+            bind(program)->free(NULL);
+            free(buffer);
+        }
+        else
+        {
+            fprintf(stderr, "use: could not open file '%s'\n", g_filename);
+        }
         free(g_filename);
         xp_array_free(&g_variables, (any)TRUE);
         g_filename = prev_filename;

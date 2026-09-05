@@ -12,6 +12,7 @@ bool test_get_variables_shouldReturnVariables()
     ASSERT(array->len == 2);
     ASSERT(str_eq(bind(array)->get(0), "one"));
     ASSERT(str_eq(bind(array)->get(1), "two"));
+    return TRUE;
 }
 
 void test_parser()
