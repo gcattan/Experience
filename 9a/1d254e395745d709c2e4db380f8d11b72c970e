@@ -1,0 +1,23 @@
+common/xp_array.c
+  s_a435a18490029e::t_68a59133b2a806 19
+common/xp_utils.h
+  s_a435a18490029e::t_eaa9790c72c682 132-138
+  s_a435a18490029e::t_e12fd63a9853f6 60-61
+  s_a435a18490029e::t_945401deef25de 169,179-180
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "9a1d254e395745d709c2e4db380f8d11b72c970e",
+  "prompts": {},
+  "sessions": {
+    "s_a435a18490029e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "38aab355-de10-4a6d-beeb-9bd0d43ca234",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Gregoire CATTAN <gregoire.cattan@ibm.com>"
+    }
+  }
+}
